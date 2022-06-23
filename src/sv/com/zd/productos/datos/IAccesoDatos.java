@@ -16,4 +16,6 @@ public interface IAccesoDatos {
     boolean existe(String nombreRecurso) throws AccesoDatosEx;
     
     List<Producto> listar(String nombreRecurso) throws AccesoDatosEx;
+    
+    void escribir(Producto producto, String nombreRecurso, boolean anexar) throws AccesoDatosEx;
 }

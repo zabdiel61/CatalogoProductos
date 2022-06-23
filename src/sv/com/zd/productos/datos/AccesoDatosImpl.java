@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import sv.com.zd.productos.entidades.Producto;
 import sv.com.zd.productos.excepciones.AccesoDatosEx;
 
@@ -65,6 +66,58 @@ public class AccesoDatosImpl implements IAccesoDatos {
         } catch (IOException ex) {
             Logger.getLogger(AccesoDatosImpl.class.getName()).log(Level.SEVERE, null, ex);
             throw new AccesoDatosEx("Error al ingresar producto: " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public String buscar(String nombreRecurso, String buscar) throws AccesoDatosEx {
+        var archivo = new File(nombreRecurso);
+        String resultado = null;
+
+        try {
+            var entrada = new BufferedReader(new FileReader(archivo));
+            var linea = entrada.readLine();
+
+            var indice = 1;
+
+            while (linea != null) {
+                if (buscar != null && linea.equalsIgnoreCase(buscar)) {
+                    resultado = buscar;
+                    break;
+                }
+                linea = entrada.readLine();
+                indice++;
+            }
+            entrada.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AccesoDatosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new AccesoDatosEx("Error al buscar producto: " + ex.getMessage());
+        } catch (IOException ex) {
+            Logger.getLogger(AccesoDatosImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new AccesoDatosEx("Error al buscar producto: " + ex.getMessage());
+        }
+
+        return resultado;
+    }
+
+    @Override
+    public void crear(String nombreRecurso) throws AccesoDatosEx {
+        var archivo = new File(nombreRecurso);
+        try {
+            var salida = new PrintWriter(archivo);
+            salida.close();
+            JOptionPane.showMessageDialog(null, "El Catalogo con nombre\n" + nombreRecurso + "\nse ha creado con exito");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AccesoDatosImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void borrar(String nombreRecurso) throws AccesoDatosEx {
+        var archivo = new File(nombreRecurso);
+        if (archivo.exists()) {
+            archivo.delete();
+            System.out.println("se ha borrado el archivo: " + nombreRecurso);
         }
     }
 

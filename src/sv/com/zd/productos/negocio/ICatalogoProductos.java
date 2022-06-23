@@ -15,5 +15,9 @@ public interface ICatalogoProductos {
     void agregarPruducto(String nombreProducto);
     
     void listarProductos();
+    
+    void buscarPelicula(String buscar);
+    
+    void iniciarCatalogoProducto();
 
 }

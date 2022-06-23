@@ -18,4 +18,10 @@ public interface IAccesoDatos {
     List<Producto> listar(String nombreRecurso) throws AccesoDatosEx;
     
     void escribir(Producto producto, String nombreRecurso, boolean anexar) throws AccesoDatosEx;
+    
+    String buscar(String nombreRecurso, String buscar) throws AccesoDatosEx ; 
+    
+    void crear(String nombreRecurso) throws AccesoDatosEx;
+    
+    void borrar(String nombreRecurso) throws AccesoDatosEx;
 }
